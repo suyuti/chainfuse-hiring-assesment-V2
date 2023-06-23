@@ -2,13 +2,13 @@ var currencyCloud = require('currency-cloud');
 const uuid4 = require('uuid/v4');
 
 currencyCloud.authentication.login({
-  environment: 'demo', 
+  environment: 'demo',
   loginId: process.env.CURRCLOUT_ID,
-  apiKey:  process.env.CURRCLOUT_KEY
+  apiKey: process.env.CURRCLOUT_KEY
 })
 
 const createBeneficiency = async (req, res) => {
-  const {bankAccountHolderName, bankCountry, currency, name, bicSwift, iban} = req.body;
+  const { bankAccountHolderName, bankCountry, currency, name, bicSwift, iban } = req.body;
   let beneficiary = await currencyCloud.beneficiaries.create({
     bankAccountHolderName: bankAccountHolderName,
     bankCountry: bankCountry,
@@ -18,11 +18,11 @@ const createBeneficiency = async (req, res) => {
     iban: iban
   })
 
-  return res.send({status: true, data:beneficiary});
+  return res.send({ status: true, data: beneficiary });
 }
 
 const createPayment = async (req, res) => {
-  const {currency, amount, reason, reference, paymentType, benficiaryId} = req.body;
+  const { currency, amount, reason, reference, paymentType, benficiaryId } = req.body;
   const uniqueRequestId = uuid4();
 
   let payment = await currencyCloud.payments.create({
@@ -35,7 +35,7 @@ const createPayment = async (req, res) => {
     benficiaryId: benficiaryId
   })
 
-  return res.send({status: true, data:payment});
+  return res.send({ status: true, data: payment });
 }
 
 const getBalance = async (req, res) => {
